@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { PoetryService } from "../services/poetry.service";
 import { Poem } from "../models/poem";
 import { finalize } from "rxjs/operators";
 
 @Component({
-    selector: 'author-and-title',
-    templateUrl: 'author.and.title.component.html',
-    styleUrls: ['author.and.title.component.css']
+    selector: 'title-search',
+    templateUrl: 'title.component.html',
+    styleUrls: ['title.component.css']
 })
-export class AuthorAndTitleComponent {
+export class TitleComponent {
 
     // ------------------------------------------------------- Member Variables
 
@@ -19,8 +19,8 @@ export class AuthorAndTitleComponent {
     errorMsg: string = '';
 
     form = this.fb.group({
-        author: ['', Validators.required],
-        title: ['', Validators.required]
+        title: ['', Validators.required],
+        exactMatch: [false]
     });
 
     // ----------------------------------------------------- Constructor / Init
@@ -37,9 +37,9 @@ export class AuthorAndTitleComponent {
         this.errorMsg = '';
         this.poems = [];
 
-        // call poem service passing in entered author and title
+        // call poem service passing in entered title
         const vals = this.form.value;
-        this.poetryService.searchByAuthorAndTitle(vals.author as string, vals.title as string)
+        this.poetryService.searchByTitle(vals.title as string, vals.exactMatch as boolean)
         .pipe(
             finalize(() => this.loading = false)
         )
@@ -60,5 +60,4 @@ export class AuthorAndTitleComponent {
     }
 
     // -------------------------------------------------------- Private Methods
-
 }

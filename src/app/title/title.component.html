@@ -1,16 +1,16 @@
 <div class='mainDiv'>
 
-    <h3 class="title">Search by Author and Title</h3>
+    <h3 class="title">Search by Title</h3>
 
     <form [formGroup]="form">
 
         <mat-form-field appearance="outline">
-            <input placeholder="Author" matInput formControlName="author" />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
             <input placeholder="Title" matInput formControlName="title" />
         </mat-form-field>
+
+        <mat-slide-toggle color="primary" formControlName="exactMatch">
+            Exact match?
+        </mat-slide-toggle>
 
         <button mat-raised-button color="warn" [disabled]="!form.valid" (click)="search()">Search</button>
 
