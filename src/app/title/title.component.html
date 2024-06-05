@@ -34,7 +34,7 @@
             line count: {{poem.linecount}}
         </mat-card-content>
 
-        <mat-expansion-panel>
+        <mat-expansion-panel *ngIf="poem.lines && poem.lines.length > 0">
             <mat-expansion-panel-header>{{poem.lines[0]}}</mat-expansion-panel-header>
             <mat-panel-description style="display: inline;" [innerHTML]="poem.lines.join('\<br/>')"></mat-panel-description>
         </mat-expansion-panel>
