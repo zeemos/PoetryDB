@@ -21,42 +21,22 @@ export class PoetryService {
 
     // search by author and optionally set the exact match flag
     searchByAuthor(author: string, exactMatch: boolean ): Observable<any> {
-        let url:string = `${this.POETRY_API_BASE_URL}author/${author}${exactMatch ? ':abs' : ''}`;
-
-        return this.http.get<Poem[]>(url, { observe: 'response' }).pipe(
-            tap(resp => {
-                console.log(resp);
-            }),
-            map(resp => {
-                if (resp.status === 200) {
-                    return resp.body;
-                }
-                throw new Error('Invalid response code');
-            })
-        );
+        return this.callService(`${this.POETRY_API_BASE_URL}author/${author}${exactMatch ? ':abs' : ''}`);
     }
 
     // search by title and optionally set the exact match flag
     searchByTitle(title: string, exactMatch: boolean ): Observable<any> {
-        let url:string = `${this.POETRY_API_BASE_URL}title/${title}${exactMatch ? ':abs' : ''}`;
-
-        return this.http.get<Poem[]>(url, { observe: 'response' }).pipe(
-            tap(resp => {
-                console.log(resp);
-            }),
-            map(resp => {
-                if (resp.status === 200) {
-                    return resp.body;
-                }
-                throw new Error('Invalid response code');
-            })
-        );
+        return this.callService(`${this.POETRY_API_BASE_URL}title/${title}${exactMatch ? ':abs' : ''}`);
     }
 
     // search by author and title
     searchByAuthorAndTitle(author: string, title: string): Observable<any> {
-        let url:string = `${this.POETRY_API_BASE_URL}author,title/${author};${title}`;
+        return this.callService(`${this.POETRY_API_BASE_URL}author,title/${author};${title}`);
+    }
 
+    // -------------------------------------------------------- Private Methods
+
+    callService(url: string): Observable<any> {
         return this.http.get<Poem[]>(url, { observe: 'response' }).pipe(
             tap(resp => {
                 console.log(resp);
